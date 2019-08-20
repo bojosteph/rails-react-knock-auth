@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_article, only: [:show, :update, :destroy]
 
   # GET /articles
@@ -35,7 +36,9 @@ class ArticlesController < ApplicationController
 
   # DELETE /articles/1
   def destroy
-    @article.destroy
+    if current_user.admin?
+      @article.destroy
+    end
   end
 
   private

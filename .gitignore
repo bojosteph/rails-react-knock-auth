@@ -21,6 +21,8 @@
 /storage/*
 !/storage/.keep
 
+/client/node_modules
+
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
