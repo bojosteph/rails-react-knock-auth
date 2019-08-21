@@ -12,10 +12,14 @@ import {
 
 
 const apiUrl = 'http://localhost:3001/api/articles';
+const token = "Bearer " + localStorage.getItem("jwt")
+
+
+
 
 export const getArticles = () => {
   return (dispatch) => {
-    return axios.get(`${apiUrl}.json`)
+    return axios({method: 'get', url: '/api/articles', headers: {'Authorization': token }})
     .then(response => {
       dispatch({ type: RECEIVE_ARTICLES, payload: response.data})
     })
@@ -25,7 +29,7 @@ export const getArticles = () => {
 
 export const addArticle = ({ title, content }) => {
   return (dispatch) => {
-    return axios.post(`${apiUrl}.json`, {title, content})
+    return axios({ method: 'post', url:`${apiUrl}.json`, headers: {'Authorization': token }, data: {title, content}})
     .then(response => {
       let data = response.data;
       dispatch({
@@ -42,7 +46,7 @@ export const addArticle = ({ title, content }) => {
 
 export const getArticle = (id) => {
   return (dispatch) => {
-    return axios.get(`${apiUrl}/${id}.json`)
+    return axios({method: 'get', url: `/api/articles/${id}`, headers: {'Authorization': token }})
       .then(response => {
         dispatch({ type: RECEIVE_ARTICLE, payload: response.data });
       })
@@ -54,7 +58,7 @@ export const getArticle = (id) => {
 
 export const deleteArticle = (id) => {
   return (dispatch) => {
-    return axios.delete(`${apiUrl}/${id}.json`)
+    return axios({ method:'delete', url:`${apiUrl}/${id}.json`, headers: {'Authorization': token}})
     .then(response => {
       dispatch({ type: REMOVE_ARTICLE, payload: {id}})
     })
@@ -70,7 +74,7 @@ export const deleteArticle = (id) => {
 export const updateArticle = (article) => {
   const articleId = article.id;
   return (dispatch) => {
-    return axios.patch(`${apiUrl}/${article.id}.json`, {title: article.title, content: article.content})
+    return axios({ method:'patch', url:`${apiUrl}/${article.id}.json`, headers: {'Authorization': token }, data: {title: article.title, content: article.content}})
       .then(response => {
         const data = response.data;
         dispatch({ type: UPDATE_ARTICLE, payload: {id: data.id, title: data.title, content: data.content}})
