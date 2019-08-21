@@ -4,3 +4,7 @@ export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
 export const REMOVE_ARTICLE = 'REMOVE_ARTICLE';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
 export const REPLACE_ARTICLE = 'REPLACE_ARTICLE';
+export const USER_LOADED = 'USER_LOADED';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
