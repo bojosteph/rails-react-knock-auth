@@ -1,54 +1,39 @@
-import React from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateArticle } from '../actions';
 
-class ArticleEdit extends React.Component {
-  constructor() {
-    super();
-    this.state = { title: '', content: ''};
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
+class ArticleEdit extends Component {        
 
-  componentDidMount() {
-    let token = "Bearer " + localStorage.getItem("jwt");
-    axios({method: 'get', url: `/api/articles/${this.props.match.params.id}`, headers: {'Authorization': token }})
-      .then((response) => { 
-        this.setState(response.data)
-      })
-      .catch(error => console.log('error', error));
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let token = "Bearer " + localStorage.getItem("jwt")
-    axios({ method: 'patch', url: `/api/articles/${this.state.id}`, headers: {'Authorization': token }, data: this.state})
-      .then(() => {
-        this.props.history.push(`/articles/${this.state.id}`);
-      })
-      .catch(error => console.log('error', error));
-  }
-
-  handleChange(event) {
+  
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+  
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const id = this.props.article.id
+    const title = this.state.title ? this.state.title : this.props.article.title;
+    const content = this.state.content ? this.state.content : this.props.article.content;
+    const article = { id: id, title: title, content: content}
+    this.props.updateArticle(article);
   }
 
-  handleCancel() {
-    this.props.history.push(`/articles/${this.state.id}`);
+  handleCancel = () => {
+    this.props.history.push(`/articles/${this.props.article.id}`);
   }
 
   render() {
     return (
       <div>
-        <h1>Edit {this.state.title}</h1>
+        <h1>Edit {this.props.article.title}</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Title</label>
-            <input type="text" name="title" value={this.state.title} onChange={this.handleChange} className="form-control" />
+            <input type="text" name="title" defaultValue={this.props.article.title} onChange={this.handleChange} className="form-control" />
           </div>
           <div className="form-group">
             <label>Content</label>
-            <textarea name="content" rows="5" value={this.state.content} onChange={this.handleChange} className="form-control" />
+            <textarea name="content" rows="5" defaultValue={this.props.article.content} onChange={this.handleChange} className="form-control" />
           </div>
           <div className="btn-group">
             <button type="submit" className="btn btn-dark">Update</button>
@@ -56,8 +41,13 @@ class ArticleEdit extends React.Component {
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default ArticleEdit;
+const mapStateToProps = (state) => ({ article: state.article });
+
+const mapDispatchToProps = { updateArticle };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleEdit);
+
