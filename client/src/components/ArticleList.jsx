@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
-import  axios  from 'axios';
+import  { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class ArticleList extends Component {
-  constructor() {
-    super();
-    this.state = { articles: [] };
-  }
-
-  componentDidMount() {
-    let token = "Bearer " + localStorage.getItem("jwt");
-    axios({method: 'get', url: '/api/articles', headers: {'Authorization': token }})
-      .then(response => { 
-        this.setState({ articles: response.data })
-      })
-      .catch(error => console.log('error', error));
-  }
+  
 
   render() {
+    if(this.props.articles.length) {
     return (
       <div>
-        {this.state.articles.map((article) => {
+        <h4>Articles</h4>
+        {this.props.articles.map((article) => {
           return(
             <div key={article.id}>
               <h2><Link to={`/articles/${article.id}`}>{article.title}</Link></h2>
@@ -29,10 +19,26 @@ class ArticleList extends Component {
             </div>
           )     
         })}
-        <Link to="/articles/new" className="btn btn-outline-primary">Create Article</Link>  
+        
       </div>
     )
-  }
+      } else {
+        return (<div>No Articles</div> )
+      }
+  } 
 }
 
-export default ArticleList;
+const mapStateToProps = (state) => ({ articles: state.articles });
+
+export default connect(mapStateToProps)(ArticleList);
+
+
+
+// componentDidMount() {
+//   let token = "Bearer " + localStorage.getItem("jwt");
+//   axios({method: 'get', url: '/api/articles', headers: {'Authorization': token }})
+//     .then(response => { 
+//       this.setState({ articles: response.data })
+//     })
+//     .catch(error => console.log('error', error));
+// }

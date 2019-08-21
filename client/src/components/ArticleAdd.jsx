@@ -1,49 +1,37 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { addArticle } from '../actions/index';
 
 class ArticleAdd extends Component {
-  constructor() {
-    super();
-    this.state = { title: '', content: ''};
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
+  state = { title: '', content: ''};     
 
-  handleSubmit(event) {
-    event.preventDefault();
-    let token = "Bearer " + localStorage.getItem("jwt")
-    axios({ method: 'post', url: '/api/articles', headers: {'Authorization': token }, data: this.state})
-      .then((response) => {
-        this.props.history.push(`/articles/${response.data.id}`);
-      })
-      .catch(error => console.log('error', error));
-  }
-
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleCancel() {
-    this.props.history.push("/articles");
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.addArticle(this.state)
   }
 
+ 
   render() {
     return (
       <div>
-        <h1>Create Article Post</h1>
+        <h4>Add Article </h4>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Title</label>
-            <input type="text" name="title" value={this.state.title} onChange={this.handleChange} className="form-control" />
+            <input type="text" name="title" value={this.state.title} onChange={this.handleChange}
+             className="form-control"  placeholder="Title"/>
           </div>
           <div className="form-group">
             <label>Content</label>
-            <textarea name="content" rows="5" value={this.state.content} onChange={this.handleChange} className="form-control" />
+            <textarea name="content" rows="5" value={this.state.content} onChange={this.handleChange} 
+            className="form-control" placeholder="Content" />
           </div>
           <div className="btn-group">
             <button type="submit" className="btn btn-dark">Create</button>
-            <button type="button" onClick={this.handleCancel} className="btn btn-secondary">Cancel</button>
           </div>
         </form>
       </div>
@@ -51,4 +39,18 @@ class ArticleAdd extends Component {
   }
 }
 
-export default ArticleAdd;
+const mapDispatchToProps = { addArticle };
+
+export default connect(null, mapDispatchToProps)(ArticleAdd);
+
+
+
+// handleSubmit(event) {
+//   event.preventDefault();
+//   let token = "Bearer " + localStorage.getItem("jwt")
+//   axios({ method: 'post', url: '/api/articles', headers: {'Authorization': token }, data: this.state})
+//     .then((response) => {
+//       this.props.history.push(`/articles/${response.data.id}`);
+//     })
+//     .catch(error => console.log('error', error));
+// }

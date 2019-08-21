@@ -7,12 +7,13 @@ import ArticleList from './ArticleList';
 import ArticleInfo from './ArticleInfo';
 import ArticleAdd from './ArticleAdd';
 import ArticleEdit from './ArticleEdit';
-import {BrowserRouter as Router, Route, NavLink, Switch} from 'react-router-dom'
+import {Router, Route, NavLink, Switch} from 'react-router-dom'
+import history from '../history';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className="container">
           <Navigation />
           <Main />
@@ -27,6 +28,7 @@ const Navigation = () => (
     <ul className="navbar-nav mr-auto">
       <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/">Home</NavLink></li>
       <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/articles">Articles</NavLink></li>
+      <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/articles/new">Add Articles</NavLink></li>
       {
         localStorage.getItem("jwt") ? (
           <li className="nav-item"><NavLink exact className="nav-link" to="/logout">Log Out</NavLink></li>)

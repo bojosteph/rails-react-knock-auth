@@ -1,0 +1,2 @@
+export const RECEIVE_ARTICLES = 'GET_ARTICLES';
+export const ADD_ARTICLE = 'ADD_ARTICLE';
