@@ -18,7 +18,8 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload,
         isAuthenticated: true,
-        loading: false
+        loading: false,
+        user: action.payload.user
       }
     case LOGIN_FAIL:
       localStorage.removeItem('jwt')

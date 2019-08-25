@@ -11,12 +11,37 @@ const userUrl = 'http://localhost:3001/api/user_token'
 
 
 
-const login = (request) => {
-  axios.post(`${userUrl}`, request)
-    .then(response => {
-      dispatchEvent({
-        type: LOGIN_SUCCESS, payload: response.data
+export const login = user => {
+  return (dispatch) => {    
+    const request = {"auth": user};  
+    return axios.post(`${userUrl}.json`, request)
+    .then(response => { 
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: response.data
       })
-    }).catch(error => { throw(error)})
+    })
+    .then(()=> {
+      history.push("/articles")
+    })
+    .catch(error => { throw(error)})
+  }
 
 }
+
+// export const addArticle = ({ title, content }) => {
+//   return (dispatch) => {
+//     return axios({ method: 'post', url:`${apiUrl}.json`, headers: {'Authorization': token }, data: {title, content}})
+//     .then(response => {
+//       let data = response.data;
+//       dispatch({
+//         type: ADD_ARTICLE,
+//         payload: {id: data.id, title: data.title, content: data.content}
+//       })
+//     })
+//     .then(() => {
+//       history.push("/articles")
+//     })
+//     .catch(error => { throw(error)});
+//   };
+// };

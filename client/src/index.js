@@ -8,8 +8,14 @@ import './stylesheets/index.css';
 import App from './components/App';
 import rootReducer from './reducers';
 import { getArticles } from './actions';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const middleware = [thunk, logger];
+
+const store = createStore(rootReducer, 
+  composeWithDevTools(applyMiddleware(...middleware))
+
+);
 
 store.dispatch(getArticles());
 
