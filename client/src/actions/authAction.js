@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import setAuthToken from '../utils/setAuthToken';
 import {
   USER_LOADED,
   LOGIN_SUCCESS,
@@ -8,6 +9,25 @@ import {
 } from './types';
 
 const userUrl = 'http://localhost:3001/api/user_token'    
+
+
+export const loadUser = () => {
+  return (dispatch) => {
+    if(localStorage.getItem('jwt')) {
+      setAuthToken(localStorage.getItem('jwt'));
+    } {
+      return axios.get(`${userUrl}`)
+      .then(response => {
+        dispatch({
+          type: USER_LOADED,
+          payload: response.data
+        });
+      })
+      .catch(error => {throw(error)})
+     
+    } 
+  }
+}
 
 
 
@@ -19,7 +39,8 @@ export const login = user => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: response.data
-      })
+      });
+      loadUser();
     })
     .then(()=> {
       history.push("/articles")

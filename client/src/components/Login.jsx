@@ -15,13 +15,13 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
-  handleSubmit (event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.login(this.state)        
     }      
