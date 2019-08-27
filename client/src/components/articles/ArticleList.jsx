@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import  { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getArticles} from '../../actions/index';
 
 class ArticleList extends Component {
   
+  componentDidMount(){
+    this.props.getArticles()
+  }
 
   render() {
     if(this.props.articles.length) {
@@ -30,15 +34,6 @@ class ArticleList extends Component {
 
 const mapStateToProps = (state) => ({ articles: state.articles });
 
-export default connect(mapStateToProps)(ArticleList);
+export default connect(mapStateToProps, {getArticles})(ArticleList);
 
 
-
-// componentDidMount() {
-//   let token = "Bearer " + localStorage.getItem("jwt");
-//   axios({method: 'get', url: '/api/articles', headers: {'Authorization': token }})
-//     .then(response => { 
-//       this.setState({ articles: response.data })
-//     })
-//     .catch(error => console.log('error', error));
-// }

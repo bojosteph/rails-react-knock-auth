@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addArticle } from '../actions/index';
+import { addArticle } from '../../actions/index';
 
 class ArticleAdd extends Component {
   state = { title: '', content: ''};     

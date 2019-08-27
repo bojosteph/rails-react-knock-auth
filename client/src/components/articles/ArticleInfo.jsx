@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getArticle, deleteArticle } from '../actions';
+import { getArticle, deleteArticle } from '../../actions/index';
 
 class ArticleInfo extends Component {
   
@@ -36,22 +36,3 @@ const mapDispatchToProps = { getArticle, deleteArticle}
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleInfo);
 
 
-// componentDidMount() {
-//   let token = "Bearer " + localStorage.getItem("jwt");
-//   axios({method: 'get', url: `/api/articles/${this.props.match.params.id}`, headers: {'Authorization': token }})
-//     .then((response) => { 
-//       this.setState({
-//         article: response.data
-//       })
-//     })
-//     .catch(error => console.log('error', error));
-// }
-
-// handleDelete() {
-//   let token = "Bearer " + localStorage.getItem("jwt");
-//   axios({ method: 'delete', url: `/api/articles/${this.props.match.params.id}`, headers: {'Authorization': token}})
-//     .then(() => {
-//       this.props.history.push("/articles")
-//     })
-//     .catch(error => console.log('error', error));
-// }

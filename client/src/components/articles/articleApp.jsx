@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import '../stylesheets/App.css';
+import { connect } from 'react-redux';
+// import '../stylesheets/App.css';
 import Home from './Home';
-import Login from './Login';
-import Logout from './Logout';
+
 import ArticleList from './ArticleList';
 import ArticleInfo from './ArticleInfo';
 import ArticleAdd from './ArticleAdd';
 import ArticleEdit from './ArticleEdit';
 import {Router, Route, NavLink, Switch} from 'react-router-dom'
-import history from '../history';
+import history from '../../history';
+import { logoutUser } from "../../actions/authActions";
 
-class App extends Component {
+class ArticleApp extends Component {
+
+  
   render() {
     return (
       <Router history={history}>
@@ -29,20 +32,15 @@ const Navigation = () => (
       <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/">Home</NavLink></li>
       <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/articles">Articles</NavLink></li>
       <li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/articles/new">Add Articles</NavLink></li>
-      {
-        localStorage.getItem("jwt") ? (
-          <li className="nav-item"><NavLink exact className="nav-link" to="/logout">Log Out</NavLink></li>)
-        :
-          (<li className="nav-item"><NavLink exact className="nav-link" activeClassName="active" to="/login">Log In</NavLink></li>
-        )}
+      
+             
     </ul>
   </nav>
 );
 const Main = () => (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route exact path="/login" component={Login} />
-    <Route exact path="/logout" component={Logout} />
+    
     <Route exact path="/articles" component={ArticleList} />
     <Route exact path="/articles/new" component={ArticleAdd} />
     <Route exact path="/articles/:id" component={ArticleInfo} />
@@ -50,4 +48,8 @@ const Main = () => (
   </Switch>
 );
 
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {})(ArticleApp);

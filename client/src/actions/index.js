@@ -12,12 +12,13 @@ import {
 
 
 const apiUrl = 'http://localhost:3001/api/articles';
-const token = "Bearer " + localStorage.getItem("jwt")
+const token = "Bearer " + localStorage.getItem("jwtToken")
 
 
 
 
 export const getArticles = () => {
+  // debugger
   return (dispatch) => {
     return axios({method: 'get', url: '/api/articles', headers: {'Authorization': token }})
     .then(response => {

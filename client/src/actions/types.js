@@ -1,10 +1,9 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const USER_LOADING = "USER_LOADING";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const RECEIVE_ARTICLES = 'GET_ARTICLES';
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
 export const REMOVE_ARTICLE = 'REMOVE_ARTICLE';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
 export const REPLACE_ARTICLE = 'REPLACE_ARTICLE';
-export const USER_LOADED = 'USER_LOADED';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const LOGOUT = 'LOGOUT';

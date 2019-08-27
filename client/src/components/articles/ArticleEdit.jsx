@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateArticle } from '../actions';
+import { updateArticle } from '../../actions';
 
 class ArticleEdit extends Component {        
 
